@@ -1,5 +1,12 @@
 import Vue from 'vue'
 import App from './App'
+// 加载 element 组件
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
+Vue.use(ElementUI)
+// 加载 ajax 库
+import VueResource from 'vue-resource'
+Vue.use(VueResource)
 //
 import Index from './components/Index'
 //
