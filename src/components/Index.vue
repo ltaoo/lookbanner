@@ -1,8 +1,13 @@
 <template>
-  <div>
-    <el-row>
-      <el-col :span="4" v-for="img in images">
-        <el-card :body-style="{ padding: '0px', cursor: 'pointer' }">
+  <div class="index">
+    <el-row 
+      :gutter="10" 
+      v-infinite-scroll="loadMore" 
+      infinite-scroll-disabled="busy" 
+      infinite-scroll-distance="10"
+    >
+      <el-col :span="8" v-for="img in images" class="img__item">
+        <el-card :body-style="{ padding: '0px', cursor: 'pointer'}">
           <img :src="img.original_url" class="image" @click="changeVisible(img)">
           <div style="padding: 14px;">
             <span>{{img.web_name}}</span>
@@ -13,6 +18,7 @@
         </el-card>
       </el-col>
     </el-row>
+    <div v-loading="busy" class="el-loading-demo"></div>
     <el-dialog v-model="dialogVisible" size="small">
       <img :src="currentImg.original_url" class="image">
     </el-dialog>
@@ -24,36 +30,72 @@
     name: 'index',
     data () {
       return {
+        page: 1,
         images: [],
         dialogVisible: false,
         // 点击的图片
         currentImg: {
           original_url: ''
-        }
+        },
+        busy: false
       }
     },
     // 页面前获取数据
-    beforeCreate () {
-      this.$http.get('http://127.0.0.1:3000/image')
-        .then(res => {
-          // console.log(res)
-          if (res.status === 200) {
-            // 获取数据成功
-            this.images = res.body
-          }
-        }, err => {
-          console.log(err)
-        })
+    mounted () {
+      // this.$http.get('http://127.0.0.1:3000/image/' + this.page)
+      //   .then(res => {
+      //     console.log(res)
+      //     if (res.status === 200) {
+      //       // 获取数据成功
+      //       this.images = res.body.data
+      //       this.page += 1
+      //     }
+      //   }, err => {
+      //     console.log(err)
+      //   })
     },
     methods: {
       changeVisible (img) {
         this.dialogVisible = !this.dialogVisible
         this.currentImg = img
+      },
+      // 加载更多数据
+      loadMore () {
+        console.log('现在的 page 是：', this.page)
+        this.busy = true
+        this.$http.get('http://127.0.0.1:3000/image/' + this.page)
+          .then(res => {
+            console.log(res)
+            if (res.status === 200) {
+              // 获取数据成功
+              let oldAry = [...this.images]
+              console.log(oldAry)
+              this.images = [...oldAry, ...res.body.img]
+              console.log(this.images)
+              this.busy = false
+              this.page += 1
+            }
+          }, () => {
+            // console.log(err)
+            // this.busy = false
+            this.$message({
+              message: '没有更多图片了',
+              duration: 4000,
+              // 显示关闭按钮
+              showClose: true
+            })
+          })
       }
     }
   }
 </script>
 
 <style>
-  
+  .index {
+    width: 980px;
+    margin: 0 auto;
+  }
+  .img__item {
+    margin-bottom: 10px;
+  }
 </style>

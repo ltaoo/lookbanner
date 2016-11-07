@@ -7,6 +7,10 @@ Vue.use(ElementUI)
 // 加载 ajax 库
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
+
+// 注册指令
+import infiniteScroll from 'vue-infinite-scroll'
+Vue.use(infiniteScroll)
 //
 import Index from './components/Index'
 //
