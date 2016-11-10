@@ -1,27 +1,16 @@
 # lookbanner
 
-> A Vue.js project
+> 一个采集电商网站 banner 的网站前端部分
 
-## Build Setup
+## 开始
 
 ``` bash
-# install dependencies
+# 安装项目依赖
 npm install
 
-# serve with hot reload at localhost:8080
+# 运行 json-server 服务
+npm run server
+
+# 打开另一个cmd窗口，开启开发服务器，将会自动打开浏览器
 npm run dev
-
-# build for production with minification
-npm run build
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

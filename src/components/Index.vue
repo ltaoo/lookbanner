@@ -40,20 +40,6 @@
         busy: false
       }
     },
-    // 页面前获取数据
-    mounted () {
-      // this.$http.get('http://127.0.0.1:3000/image/' + this.page)
-      //   .then(res => {
-      //     console.log(res)
-      //     if (res.status === 200) {
-      //       // 获取数据成功
-      //       this.images = res.body.data
-      //       this.page += 1
-      //     }
-      //   }, err => {
-      //     console.log(err)
-      //   })
-    },
     methods: {
       changeVisible (img) {
         this.dialogVisible = !this.dialogVisible
@@ -61,17 +47,15 @@
       },
       // 加载更多数据
       loadMore () {
-        console.log('现在的 page 是：', this.page)
         this.busy = true
-        this.$http.get('http://127.0.0.1:3000/image/' + this.page)
+        // this.$http.get('http://139.129.17.174:3000/pages/' + this.page)
+        this.$http.get('http://127.0.0.1:3000/pages/' + this.page)
           .then(res => {
-            console.log(res)
             if (res.status === 200) {
               // 获取数据成功
               let oldAry = [...this.images]
-              console.log(oldAry)
+              // this.images = [...oldAry, ...res.body]
               this.images = [...oldAry, ...res.body.img]
-              console.log(this.images)
               this.busy = false
               this.page += 1
             }
@@ -93,7 +77,7 @@
 <style>
   .index {
     width: 980px;
-    margin: 0 auto;
+    margin: 10px auto;
   }
   .img__item {
     margin-bottom: 10px;

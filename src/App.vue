@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <el-menu theme="light" default-active="1" class="el-menu-demo" mode="horizontal">
+    <el-menu theme="light" default-active="1" class="navigator" mode="horizontal">
       <el-menu-item index="1">LookBanner</el-menu-item>
       <el-submenu index="2">
         <template slot="title">收录列表</template>
@@ -38,5 +38,8 @@ img {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #888;
+}
+.navigator {
+  margin-bottom: 20px;
 }
 </style>
