@@ -25,4 +25,13 @@ rect.height = meta.height * (options.fixedHeight ? 1 : width / meta.width)
 // 修改如下
 rect.height = (meta.height/meta.width)*width + 80
 ```
-暂时的实现，等待之后优化。。
+
+将瀑布流与滚动加载整合到一起，vue-infinite-scroll 与 vue-waterfall，需要增加一段代码：
+```javascript
+// lib/waterfall.vue
+// 179 行附近
+vm.style.height = Math.max.apply(Math, tops) + 'px'
+// 下面加上
+vm.$parent.busy = false
+```
+

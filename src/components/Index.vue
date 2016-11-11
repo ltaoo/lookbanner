@@ -1,15 +1,17 @@
 <template>
   <div class="index">
     <waterfall
+      v-infinite-scroll="loadMore" 
+      infinite-scroll-disabled="busy" 
+      infinite-scroll-distance="100"
       :align="align"
-      :line-gap="320"
+      :line-gap="480"
       :min-line-gap = "20"
       :max-line-gap = "20"
       :watch="images"
       @reflowed="reflowed"
       ref="waterfall"
     >
-      <!-- each component is wrapped by a waterfall slot -->
       <waterfall-slot
         v-for="(img, index) in images"
         :width="img.width"
@@ -55,7 +57,7 @@
       }
     },
     mounted () {
-      this.loadMore()
+      // this.loadMore()
     },
     components: {
       'waterfall': Waterfall,
@@ -75,17 +77,21 @@
             if (res.status === 200) {
               // 获取数据成功
               let oldAry = [...this.images]
+              // res.body = res.body.map(item => {
+              //   return Object.assign(item, {
+              //     width: parseInt(item.width, 10),
+              //     height: parseInt(item.height, 10)
+              //   })
+              // })
               // this.images = [...oldAry, ...res.body]
               res.body.img = res.body.img.map(item => {
-                console.log(item.width, item.height)
                 return Object.assign(item, {
                   width: parseInt(item.width, 10),
                   height: parseInt(item.height, 10)
                 })
               })
               this.images = [...oldAry, ...res.body.img]
-              console.log(this.images)
-              this.busy = false
+              // this.busy = false
               this.page += 1
             }
           }, () => {
@@ -98,11 +104,6 @@
               showClose: true
             })
           })
-      },
-      shuffle: function () {
-        this.items.sort(function () {
-          return Math.random() - 0.5
-        })
       },
       reflowed: function () {
         this.isBusy = false
