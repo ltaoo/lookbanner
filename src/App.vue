@@ -4,14 +4,13 @@
       <el-menu-item index="1"><router-link to="/">LookBanner</router-link></el-menu-item>
       <el-submenu index="2">
         <template slot="title">收录列表</template>
-        <el-menu-item index="2-1"><router-link to="/web/cloudmusic">网易云音乐</router-link></el-menu-item>
-        <el-menu-item index="2-2"><router-link to="/web/tmall">天猫</router-link></el-menu-item>
-        <el-menu-item index="2-3"><router-link to="/web/suning">苏宁</router-link></el-menu-item>
+        <template v-for="(name, index) in webs">
+          <el-menu-item :index="'2-'+index"><router-link :to="'/web/'+name">{{name}}</router-link></el-menu-item>
+        </template>
       </el-submenu>
       <el-menu-item index="3"><router-link to="/person">个人中心</router-link></el-menu-item>
     </el-menu>
-  
-    <router-view></router-view>
+      <router-view></router-view>
   </div>
 </template>
 
@@ -20,8 +19,22 @@ import Hello from './components/Hello'
 
 export default {
   name: 'app',
+  data() {
+    return {
+      webs: []
+    }
+  },
   components: {
     Hello
+  },
+  mounted() {
+    // 查询收录了什么网站
+    this.$http.get('http://127.0.0.1:3000/webs')
+      .then(res => {
+        if(res.status === 200) {
+          this.webs = res.body
+        }
+      })
   }
 }
 </script>
