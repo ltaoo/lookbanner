@@ -13,8 +13,10 @@ import infiniteScroll from 'vue-infinite-scroll'
 Vue.use(infiniteScroll)
 //
 import Index from './components/Index'
-//
+// 个人中心页面
 import Person from './components/Person'
+// 根据网站显示
+import WebDetail from './containers/Web'
 
 // 加载路由模块 http://router.vuejs.org/
 import VueRouter from 'vue-router'
@@ -28,6 +30,10 @@ const routes = [
   {
     path: '/person',
     component: Person
+  },
+  {
+    path: '/web/:name',
+    component: WebDetail
   }
 ]
 // 创建 router 实例

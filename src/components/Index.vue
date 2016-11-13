@@ -1,8 +1,8 @@
 <template>
   <div class="index">
     <waterfall
-      v-infinite-scroll="loadMore" 
-      infinite-scroll-disabled="busy" 
+      v-infinite-scroll="loadMore"
+      infinite-scroll-disabled="busy"
       infinite-scroll-distance="100"
       :align="align"
       :line-gap="480"
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-  import Waterfall from 'vue-waterfall/lib/waterfall'
+  import Waterfall from './waterfall'
   import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
   export default {
     name: 'index',
